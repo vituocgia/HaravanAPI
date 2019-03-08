@@ -26,6 +26,8 @@ class BaseTest(TestCase):
         self.assertIsNone(ActiveResource.headers)
         self.assertEqual('token1', haravan.HaravanResource.headers['X-Haravan-Access-Token'])
         self.assertEqual('token1', haravan.Shop.headers['X-Haravan-Access-Token'])
+        self.assertEqual('Bearer token1', haravan.HaravanResource.headers['Authorization'])
+        self.assertEqual('Bearer token1', haravan.Shop.headers['Authorization'])
 
     def test_clear_session_should_clear_site_and_headers_from_Base(self):
         haravan.HaravanResource.activate_session(self.session1)
@@ -38,6 +40,8 @@ class BaseTest(TestCase):
         self.assertIsNone(ActiveResource.headers)
         self.assertFalse('X-Haravan-Access-Token' in haravan.HaravanResource.headers)
         self.assertFalse('X-Haravan-Access-Token' in haravan.Shop.headers)
+        self.assertFalse('Authorization' in haravan.HaravanResource.headers)
+        self.assertFalse('Authorization' in haravan.Shop.headers)
 
     def test_activate_session_with_one_session_then_clearing_and_activating_with_another_session_shoul_request_to_correct_shop(self):
         haravan.HaravanResource.activate_session(self.session1)
@@ -51,6 +55,8 @@ class BaseTest(TestCase):
         self.assertIsNone(ActiveResource.headers)
         self.assertEqual('token2', haravan.HaravanResource.headers['X-Haravan-Access-Token'])
         self.assertEqual('token2', haravan.Shop.headers['X-Haravan-Access-Token'])
+        self.assertEqual('Bearer token2', haravan.HaravanResource.headers['Authorization'])
+        self.assertEqual('Bearer token2', haravan.Shop.headers['Authorization'])
 
     def test_delete_should_send_custom_headers_with_request(self):
         haravan.HaravanResource.activate_session(self.session1)
